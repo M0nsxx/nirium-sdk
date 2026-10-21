@@ -34,14 +34,14 @@ jobs:
     outputs:
       examples: ${{ steps.discover.outputs.examples }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
       - run: npm install --no-audit --no-fund --legacy-peer-deps
       - run: npm run build
       - run: mkdir -p "$RUNNER_TEMP/sdk" && npm pack --pack-destination "$RUNNER_TEMP/sdk"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: nirium-sdk
           path: ${{ runner.temp }}/sdk/nirium-*.tgz
@@ -68,11 +68,11 @@ jobs:
         example: ${{ fromJSON(needs.build-sdk.outputs.examples) }}
     name: typecheck (${{ matrix.example.name }})
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: nirium-sdk
           path: ${{ runner.temp }}/sdk
