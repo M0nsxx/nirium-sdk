@@ -1,4 +1,4 @@
 # Owners are requested for review automatically on pull requests that touch these paths.
-# This does not block merges: branch protection is not enabled on main.
+# Branch protection on main requires 1 approving review before merge (enabled 22-oct-2026).
 
 /packages/cli/ @M0nsxx
