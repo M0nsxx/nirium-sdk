@@ -50,9 +50,12 @@ The following components are in scope for security reports:
 
 > **⚠️ IMPORTANT: Nirium smart contracts have NOT been formally audited by any third-party security firm.**
 
-The protocol is currently deployed on **Stellar Testnet only** and uses test tokens with no monetary value. A formal third-party audit is planned for Month 3 of operations (Soroban layer via SCF Audit Bank; API/server layer independently funded).
+**Update, 2026-10-23 (checked against this repo's own README that day):** this section previously said the protocol "is currently deployed on Stellar Testnet only and uses test tokens with no monetary value" - that contradicted the README's own "Mainnet (real value)" section in the same repo. The corrected picture:
 
-**Internal security review (May 2026):** a self-assessment by the team, not a third-party audit or certification. **Update, 2026-10-12:** this line previously reported an aggregate score ("83/83 vectors PASS, 0 critical, 0 high"). A pass count from our own checklist is not an independent rating, so it is no longer shown. Full report: [INTERNAL_SECURITY_AUDIT.md](https://github.com/Eras256/Nirium/blob/main/INTERNAL_SECURITY_AUDIT.md).
+- **NiriumVault and NiriumProtocol** (the Soroban contracts this repo ships) remain **Stellar Testnet only**, audit-gated, no real funds ever reach them. A formal third-party audit is planned for Month 3 of operations (Soroban layer via SCF Audit Bank; API/server layer independently funded).
+- **Three things move real value on mainnet today**, none of them custodied by a Nirium-held key: a settled x402 micropayment, a treasury vault deployment the client signs, and an autonomous `Invest` the agent signs on a third-party DeFindex vault whose contract gives the agent no way to withdraw funds (see the README's "Mainnet (real value)" table for the transaction hashes).
+
+**Internal security review (May 2026):** a self-assessment by the team, not a third-party audit or certification. **Update, 2026-10-12:** this line previously reported an aggregate score ("83/83 vectors PASS, 0 critical, 0 high"). A pass count from our own checklist is not an independent rating, so it is no longer shown. Full report: [INTERNAL_SECURITY_AUDIT.md](https://github.com/nirium-protocol/nirium-core/blob/main/INTERNAL_SECURITY_AUDIT.md) (that file lives in the `nirium-core` repo, not this one).
 
 ### Security Measures Currently in Place
 
