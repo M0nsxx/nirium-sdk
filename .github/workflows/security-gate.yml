@@ -1,0 +1,62 @@
+name: Security Gate — Dependency Audit
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  node-audit:
+    name: Node.js Supply Chain Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: SDK — npm audit (high+ — blocks build)
+        working-directory: packages/sdk
+        run: |
+          npm install --legacy-peer-deps
+          npm audit --audit-level=high
+
+      - name: CLI — npm audit (high+ — blocks build)
+        working-directory: packages/cli
+        run: |
+          npm install --legacy-peer-deps
+          npm audit --audit-level=high
+
+      - name: MCP — npm audit (high+ — blocks build)
+        working-directory: packages/mcp
+        run: |
+          npm install --legacy-peer-deps
+          npm audit --audit-level=high
+
+  python-audit:
+    name: Python Supply Chain Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install package
+        # No extras here on purpose — this audits what `pip install nirium`
+        # actually ships a user, not the langchain/test extras pulled in
+        # for CI's own test suite (packages/mcp's ci.yml job installs
+        # those separately).
+        working-directory: packages/sdk-python
+        run: python -m pip install .
+
+      - name: Install pip-audit
+        run: python -m pip install pip-audit
+
+      - name: Run pip-audit (blocks build on any known vulnerability)
+        run: pip-audit

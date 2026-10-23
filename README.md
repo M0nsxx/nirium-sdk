@@ -1,5 +1,8 @@
 # Nirium
 
+[![CI](https://github.com/nirium-protocol/nirium/actions/workflows/ci.yml/badge.svg)](https://github.com/nirium-protocol/nirium/actions/workflows/ci.yml)
+[![Security Gate](https://github.com/nirium-protocol/nirium/actions/workflows/security-gate.yml/badge.svg)](https://github.com/nirium-protocol/nirium/actions/workflows/security-gate.yml)
+
 Open-source autonomous treasury and agentic payments (x402/MPP) for Stellar/Soroban.
 
 This repository contains the TypeScript and Python SDKs, the MCP server, the CLI, examples and quickstarts that let any developer:
