@@ -98,7 +98,7 @@ That third transaction is the point: the agent moved funds it does not own, and 
 
 API: [`nirium-agent.fly.dev/health`](https://nirium-agent.fly.dev/health) · node catalog: [`/api/nodes`](https://nirium-agent.fly.dev/api/nodes)
 
-Nirium's own **NiriumVault** treasury contract stays on testnet and is audit-gated: no independent third-party audit has happened yet, and no client funds ever reach it. The mainnet treasury path runs over a **DeFindex** vault instead: a third-party contract audited by OtterSec (March 2025, 16 findings, all 13 vulnerabilities resolved) on a Blend V2 strategy.
+Nirium's own **NiriumVault** treasury contract stays on testnet and is audit-gated: no independent third-party audit has happened yet, and no client funds ever reach it. The mainnet treasury path runs over a **DeFindex** vault instead: a third-party contract audited by OtterSec (March 2025, 16 findings total - 13 of them vulnerabilities, all resolved; the other 3 were non-vulnerability suggestions) on a Blend V2 strategy.
 
 ## External validation
 
