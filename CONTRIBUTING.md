@@ -63,7 +63,7 @@ nirium/
 5. Commit using conventional commits (see below)
 6. Push and open a PR against `main`
 
-Reviewers will not follow up for missing context — include a clear description of what changed and why.
+Reviewers will not follow up for missing context - include a clear description of what changed and why.
 
 ### Commit Convention
 
@@ -80,7 +80,7 @@ We follow [Conventional Commits](https://www.conventionalcommits.org/):
 
 ### AI Assistance Disclosure
 
-Every commit produced with AI assistance carries a `Co-Authored-By: <model> <noreply@anthropic.com>` trailer, where `<model>` is the model that actually produced that commit (for example `Claude Sonnet 5.5` or `Claude Opus 5.5`), never a fixed name. This is a factual disclosure of how the commit was produced — it is never stripped to make a commit look human-authored, and never added where it doesn't apply to fake the opposite. If you use AI assistance in your own contributions, disclose it the same way.
+Every commit produced with AI assistance carries a `Co-Authored-By: <model> <noreply@anthropic.com>` trailer, where `<model>` is the model that actually produced that commit (for example `Claude Sonnet 5.5` or `Claude Opus 5.5`), never a fixed name. This is a factual disclosure of how the commit was produced - it is never stripped to make a commit look human-authored, and never added where it doesn't apply to fake the opposite. If you use AI assistance in your own contributions, disclose it the same way.
 
 ### Dependency updates
 
@@ -92,7 +92,7 @@ These PRs are reviewed like any other PR: by the code owner of the path (CODEOWN
 
 - **TypeScript:** strict mode, explicit types for all public APIs
 - **Python:** type hints on public functions
-- **Comments:** only when the *why* is non-obvious — no narration of what the code does
+- **Comments:** only when the *why* is non-obvious - no narration of what the code does
 
 ---
 

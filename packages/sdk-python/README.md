@@ -1,6 +1,6 @@
 # nirium
 
-Autonomous treasury and agentic-payments infrastructure for **Nirium Protocol** on Stellar/Soroban — Python client.
+Autonomous treasury and agentic-payments infrastructure for **Nirium Protocol** on Stellar/Soroban - Python client.
 
 Nirium agents rebalance USDC ↔ CETES (tokenized Mexican T-bills via Etherfuse) 24/7 without human intervention. Built for developers who want to integrate autonomous treasury management, agentic payments with x402, and real-time market signals into their applications.
 
@@ -32,7 +32,7 @@ async def main():
     market = await agent.get_market()
     print(f"XLM Price: ${market['xlmPrice']:.4f}")
 
-    # Trigger a demo strategy on Nirium's own shared testnet vault — a real,
+    # Trigger a demo strategy on Nirium's own shared testnet vault - a real,
     # working transaction, not a simulation, but it moves Nirium's testnet
     # funds, not yours. To rebalance YOUR OWN vault, see Treasury Rebalance below.
     result = await agent.execute("blend-yield", "USDC", {"amount": 5000})
@@ -53,7 +53,7 @@ agent = Agent(api_url="https://nirium-agent.fly.dev", api_key="sk_inst_...", tok
 # 1. Listen for market signals
 @agent.on("signal")
 async def on_signal(data):
-    print(f"Signal received: {data['signal_type']} — {data['data']['details']}")
+    print(f"Signal received: {data['signal_type']} - {data['data']['details']}")
 
 # 2. Monitor connection status (connecting, connected, reconnecting, disconnected, closed)
 @agent.on("status")
@@ -95,7 +95,7 @@ agent = Agent(api_url="https://nirium-agent.fly.dev", api_key="sk_inst_...", tok
 
 ## Payment Protocols
 
-### x402 — Pay-Per-Request
+### x402 - Pay-Per-Request
 ```python
 agent.init_x402(
     secret_key="S...",          # Stellar secret key
@@ -105,7 +105,7 @@ agent.init_x402(
 response = await agent.x402_fetch("https://nirium-agent.fly.dev/api/v1/premium/signals")
 ```
 
-### LangChain tool — pay x402 from any agent
+### LangChain tool - pay x402 from any agent
 
 `NiriumX402Tool` is a LangChain `BaseTool` that wraps the same `init_x402` / `x402_fetch` client. A ReAct-style agent can pay a protected Stellar endpoint as a normal tool call. The Stellar secret is constructor/env configuration only: it never appears in the tool description, args schema, error text, or return value.
 
@@ -148,7 +148,7 @@ This is not fixed in the version published today. Use x402 (`init_x402()` / `x40
 |---|---|
 | **Public** (no key) | `health`, `loop/status`, `execute-demo`, `signals/recent`, `skills` list |
 | **Protected** (API key) | `execute`, `market`, `loop/start\|stop\|scan`, `subscriptions`, `skills/install`, `webhooks` |
-| **WebSocket** (JWT) | `/ws/signals` — real-time signal stream |
+| **WebSocket** (JWT) | `/ws/signals` - real-time signal stream |
 | **x402 Premium** | `/api/v1/premium/signals` ($0.02 USDC), `/api/v1/premium/market` ($0.05 USDC) |
 | **MPP Charge** | `/api/v1/mpp/signals`, `/api/v1/mpp/market` (testnet verified with the TypeScript client on 15 Oct 2026, mainnet untested; `mpp_fetch()` does not work in this version) |
 
@@ -159,7 +159,7 @@ Batch disbursement, non-custodial: the node builds an **unsigned** transaction, 
 ```python
 run = await agent.create_payout_run(
     recipients=[{"wallet": "GABC...", "amount": "250.00"}],
-    acknowledge_terms=True,   # required on every network — 403 without it
+    acknowledge_terms=True,   # required on every network - 403 without it
 )
 
 signed_xdr = sign_with_your_wallet(run["xdr"])
@@ -167,23 +167,23 @@ settled = await agent.submit_payout(run["runId"], signed_xdr)
 print(settled["txHash"], settled["cid"])   # on-chain hash + IPFS receipt
 ```
 
-Licensed for **independent service payments only** — contractors, freelancers, B2B. Not for subordinate-employee salary. Read `get_payout_terms()` before integrating; classifying recipients and meeting tax and labor obligations is the client's responsibility.
+Licensed for **independent service payments only** - contractors, freelancers, B2B. Not for subordinate-employee salary. Read `get_payout_terms()` before integrating; classifying recipients and meeting tax and labor obligations is the client's responsibility.
 
 Mainnet is invite-only during early access and additionally requires `client_info`.
 
 ## Treasury Rebalance
 
-Two ways to rebalance a DeFindex vault between idle cash and an invested strategy. Neither is a swap — the contract's `rebalance()` exposes exactly two instructions, `Unwind` and `Invest`, and neither accepts a destination address, so withdrawing anywhere but back into the vault itself is not expressible.
+Two ways to rebalance a DeFindex vault between idle cash and an invested strategy. Neither is a swap - the contract's `rebalance()` exposes exactly two instructions, `Unwind` and `Invest`, and neither accepts a destination address, so withdrawing anywhere but back into the vault itself is not expressible.
 
-### Propose — you review and sign, available to everyone today
+### Propose - you review and sign, available to everyone today
 
-The agent decides what it would do, using the same decision logic as the autonomous signer below, but it never signs. Public, no allowlist, no invite required — works for any vault where you're already the on-chain rebalance manager.
+The agent decides what it would do, using the same decision logic as the autonomous signer below, but it never signs. Public, no allowlist, no invite required - works for any vault where you're already the on-chain rebalance manager.
 
 ```python
 proposal = await agent.propose_treasury_rebalance(
     vault="CABC...",
     caller="GABC...",   # must already be this vault's rebalanceManager on-chain
-    enter_at=2.5,        # your own mandate — Nirium never supplies a default here
+    enter_at=2.5,        # your own mandate - Nirium never supplies a default here
     exit_at=2.0,
 )
 
@@ -194,13 +194,13 @@ else:
     print("Nothing to propose:", proposal["reason"])
 ```
 
-### Autonomous — Nirium signs, invite-only during legal review
+### Autonomous - Nirium signs, invite-only during legal review
 
-`execute_treasury_rebalance()` has Nirium sign and submit with its own RebalanceManager key — full autonomy, no per-cycle approval. **This is invite-only while a specific legal question stays open**: whether executing on a client's behalf without taking custody still counts as regulated facilitation under Mexican law. It only runs against vaults explicitly allowlisted server-side; calling it against any other vault returns 403, and Nirium's mainnet infrastructure returns 501 for it entirely, since that box holds no signing key by design. Ask if you want autonomous execution today — otherwise, `propose_treasury_rebalance()` above gives you the same decision-making with you as the one who signs.
+`execute_treasury_rebalance()` has Nirium sign and submit with its own RebalanceManager key - full autonomy, no per-cycle approval. **This is invite-only while a specific legal question stays open**: whether executing on a client's behalf without taking custody still counts as regulated facilitation under Mexican law. It only runs against vaults explicitly allowlisted server-side; calling it against any other vault returns 403, and Nirium's mainnet infrastructure returns 501 for it entirely, since that box holds no signing key by design. Ask if you want autonomous execution today - otherwise, `propose_treasury_rebalance()` above gives you the same decision-making with you as the one who signs.
 
 ## Audit Trail
 
-Anchor evidence to IPFS and get back a CID — an integrity seal, not notarization.
+Anchor evidence to IPFS and get back a CID - an integrity seal, not notarization.
 
 ```python
 anchor = await agent.anchor_audit_record(
@@ -253,4 +253,4 @@ Anchor a **hash** rather than the data itself: IPFS content cannot be deleted, s
 
 ## License
 
-Apache 2.0 — Nirium Protocol
+Apache 2.0 - Nirium Protocol
