@@ -22,7 +22,7 @@ Software-only and non-custodial: regulated partners execute settlement, the clie
 | MCP server | `npx nirium-mcp` | [![npm](https://img.shields.io/npm/v/nirium-mcp)](https://www.npmjs.com/package/nirium-mcp) | 25 tools for Claude Desktop, Cursor, and any MCP-compatible IDE. |
 | CLI | `npm install -g nirium-cli` | [![npm](https://img.shields.io/npm/v/nirium-cli)](https://www.npmjs.com/package/nirium-cli) | Scaffold and interact with Nirium from the terminal. |
 
-> The source in `packages/` matches what is published. The two SDKs share full Treasury parity (12 methods, `proposeTreasuryRebalance()`/`propose_treasury_rebalance()` included). `x402Serve()` stays TypeScript-only - it's Express middleware, server-side Node, with no meaningful equivalent in an async Python client. Going the other way, Python ships a resilient, auto-reconnecting WebSocket client (backoff, jitter, dedup) and a LangChain `BaseTool` (`pip install nirium[langchain]`) that TypeScript doesn't have yet - the version gap runs both directions, not just one.
+> The source in `packages/` matches what is published (the `overrides` in `packages/sdk` and `packages/cli` were added on 2026-10-23 for this repo's own dependency audit; npm ignores a dependency's `overrides`, so they don't change what you install). The two SDKs share full Treasury parity (12 methods, `proposeTreasuryRebalance()`/`propose_treasury_rebalance()` included). `x402Serve()` stays TypeScript-only - it's Express middleware, server-side Node, with no meaningful equivalent in an async Python client. Going the other way, Python ships a resilient, auto-reconnecting WebSocket client (backoff, jitter, dedup) and a LangChain `BaseTool` (`pip install nirium[langchain]`) that TypeScript doesn't have yet - the version gap runs both directions, not just one.
 
 Signing with a social-login wallet instead of a raw keypair? See [`nirium-pollar-adapter`](https://github.com/nirium-protocol/nirium-pollar-adapter), a separate package that adapts [Pollar](https://pollar.xyz)'s embedded-wallet SDK to sign x402 payments and audit records through this SDK.
 
@@ -140,6 +140,8 @@ Outside of any campaign, PRs are still welcome - examples, framework adapters, b
 Report vulnerabilities privately; see [SECURITY.md](./SECURITY.md).
 
 **Known transitive issue (checked 2026-10-04):** `@stellar/stellar-sdk` 16.x pins `axios` to exactly `1.18.0`, which has seven high-severity advisories fixed in `1.20.0`. `nirium` and `@x402/stellar` both depend on stellar-sdk 16, so a plain install pulls that axios. Until a 16.x patch ships, force the fixed version from your own `package.json`:
+
+**Update, 2026-10-23 (checked against the npm registry that day):** that patch shipped. `@stellar/stellar-sdk` 16.4.1 pins `axios` 1.20.0, and `nirium@0.16.1` depends on `^16.3.0`, so a fresh install now gets the fixed axios without any override. You still need the override below only if an existing lockfile keeps you on an older 16.x; `npm update @stellar/stellar-sdk` is the cleaner fix. The original note stays for that case:
 
 ```json
 {
