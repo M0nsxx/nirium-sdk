@@ -2,7 +2,7 @@
 
 Thank you for your interest in contributing. This repository holds the open-source developer toolkit: the TypeScript SDK, the Python SDK, the CLI, the MCP server, examples, and docs. It does not contain the agent runtime or the Soroban contracts, which are maintained privately.
 
-> **Note:** Nirium operates under the [Stellar Code of Conduct](https://github.com/Eras256/Nirium/blob/main/CODE_OF_CONDUCT.md). Violations can be reported to [niriumprotocol@gmail.com](mailto:niriumprotocol@gmail.com) or [community@stellar.org](mailto:community@stellar.org).
+> **Note:** Nirium operates under the [Stellar Code of Conduct](https://github.com/nirium-protocol/nirium-core/blob/main/CODE_OF_CONDUCT.md). Violations can be reported to [niriumprotocol@gmail.com](mailto:niriumprotocol@gmail.com) or [community@stellar.org](mailto:community@stellar.org).
 
 ---
 
